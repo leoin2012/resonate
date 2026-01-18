@@ -1,0 +1,46 @@
+name: resonate
+description: A haptic visual breathing and focus app.
+publish_to: 'none'
+version: 1.0.0+1
+
+environment:
+  sdk: '>=3.0.0 <4.0.0'
+
+dependencies:
+  flutter:
+    sdk: flutter
+
+  # State Management
+  flutter_riverpod: ^2.5.0
+
+  # Navigation
+  go_router: ^14.1.0
+
+  # Storage
+  shared_preferences: ^2.2.2
+  isar: ^3.1.0+1
+  isar_flutter_libs: ^3.1.0+1
+  path_provider: ^2.1.2
+
+  # UI & Animation
+  google_fonts: ^6.1.0
+  flutter_animate: ^4.5.0
+  haptic_feedback: ^0.4.0
+  intl: ^0.19.0
+
+  # Icons
+  cupertino_icons: ^1.0.6
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  flutter_lints: ^3.0.1
+  isar_generator: ^3.1.0+1
+  build_runner: ^2.4.8
+
+flutter:
+  uses-material-design: true
+
+  assets:
+    - assets/images/
+    - assets/fonts/
