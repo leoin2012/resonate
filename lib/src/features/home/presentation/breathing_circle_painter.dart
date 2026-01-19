@@ -38,7 +38,7 @@ class BreathingCirclePainter extends CustomPainter {
       canvas,
       center,
       currentRadius * 1.2,
-      color.withValues(alpha: opacityValue * 0.3),
+      color.withOpacity( opacityValue * 0.3),
     );
 
     // Draw middle glow layer
@@ -46,7 +46,7 @@ class BreathingCirclePainter extends CustomPainter {
       canvas,
       center,
       currentRadius * 1.1,
-      color.withValues(alpha: opacityValue * 0.5),
+      color.withOpacity( opacityValue * 0.5),
     );
 
     // Draw main circle
@@ -54,7 +54,7 @@ class BreathingCirclePainter extends CustomPainter {
       canvas,
       center,
       currentRadius,
-      color.withValues(alpha: opacityValue),
+      color.withOpacity( opacityValue),
     );
 
     // Draw inner highlight
@@ -62,7 +62,7 @@ class BreathingCirclePainter extends CustomPainter {
       canvas,
       center,
       currentRadius * 0.9,
-      color.withValues(alpha: opacityValue * 0.8),
+      color.withOpacity( opacityValue * 0.8),
     );
   }
 

@@ -63,8 +63,8 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen> {
                   await _hapticManager.eventTap();
                   settingsNotifier.toggleHaptic();
                 },
-                activeTrackColor: AppColors.primary.withValues(alpha: 0.5),
-                activeThumbColor: AppColors.primary,
+                activeTrackColor: AppColors.primary.withOpacity( 0.5),
+                thumbColor: WidgetStateProperty.all(AppColors.primary),
               ),
               if (settings.hapticEnabled) ...[
                 const Divider(),
@@ -251,8 +251,8 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen> {
                 ),
                 value: settings.soundEnabled,
                 onChanged: null, // Disabled for now
-                activeTrackColor: AppColors.primary.withValues(alpha: 0.5),
-                activeThumbColor: AppColors.primary,
+                activeTrackColor: AppColors.primary.withOpacity( 0.5),
+                thumbColor: WidgetStateProperty.all(AppColors.primary),
               ),
             ],
           ),
@@ -375,7 +375,7 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen> {
         color: AppColors.surface,
         borderRadius: BorderRadius.circular(16),
         border: Border.all(
-          color: AppColors.primary.withValues(alpha: 0.2),
+          color: AppColors.primary.withOpacity( 0.2),
           width: 1,
         ),
       ),
@@ -419,7 +419,7 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen> {
       label: Text(label),
       onPressed: onTap,
       backgroundColor: selected 
-          ? AppColors.primary.withValues(alpha: 0.2)
+          ? AppColors.primary.withOpacity( 0.2)
           : AppColors.surface,
       labelStyle: GoogleFonts.roboto(
         fontSize: 14,
@@ -427,7 +427,7 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen> {
         fontWeight: selected ? FontWeight.w600 : FontWeight.normal,
       ),
       side: BorderSide(
-        color: selected ? AppColors.primary : AppColors.textSecondary.withValues(alpha: 0.3),
+        color: selected ? AppColors.primary : AppColors.textSecondary.withOpacity( 0.3),
         width: 1,
       ),
       shape: RoundedRectangleBorder(

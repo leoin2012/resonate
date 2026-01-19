@@ -31,10 +31,10 @@ class _TimerControlState extends ConsumerState<TimerControlWidget> {
     return Container(
       padding: const EdgeInsets.all(24),
       decoration: BoxDecoration(
-        color: AppColors.surface.withValues(alpha: 0.8),
+        color: AppColors.surface.withOpacity( 0.8),
         borderRadius: BorderRadius.circular(20),
         border: Border.all(
-          color: AppColors.primary.withValues(alpha: 0.3),
+          color: AppColors.primary.withOpacity( 0.3),
           width: 1,
         ),
       ),
@@ -165,10 +165,10 @@ class _TimerControlState extends ConsumerState<TimerControlWidget> {
     return OutlinedButton(
       onPressed: onPressed,
       style: OutlinedButton.styleFrom(
-        backgroundColor: selected ? AppColors.primary.withValues(alpha: 0.2) : Colors.transparent,
+        backgroundColor: selected ? AppColors.primary.withOpacity( 0.2) : Colors.transparent,
         foregroundColor: selected ? AppColors.primary : AppColors.textSecondary,
         side: BorderSide(
-          color: selected ? AppColors.primary : AppColors.textSecondary.withValues(alpha: 0.3),
+          color: selected ? AppColors.primary : AppColors.textSecondary.withOpacity( 0.3),
           width: 1,
         ),
         padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 12),

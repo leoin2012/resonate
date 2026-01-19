@@ -41,7 +41,7 @@ class HomeScreen extends StatelessWidget {
                   ),
                   style: IconButton.styleFrom(
                     foregroundColor: AppColors.textPrimary,
-                    backgroundColor: AppColors.surface.withValues(alpha: 0.5),
+                    backgroundColor: AppColors.surface.withOpacity(0.5),
                   ),
                 ),
                 const SizedBox(width: 8),
@@ -56,7 +56,7 @@ class HomeScreen extends StatelessWidget {
                   ),
                   style: IconButton.styleFrom(
                     foregroundColor: AppColors.textPrimary,
-                    backgroundColor: AppColors.surface.withValues(alpha: 0.5),
+                    backgroundColor: AppColors.surface.withOpacity(0.5),
                   ),
                 ),
               ],

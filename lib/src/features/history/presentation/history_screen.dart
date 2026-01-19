@@ -178,7 +178,7 @@ class _HistoryScreenState extends ConsumerState<HistoryScreen> {
             Icon(
               Icons.history_rounded,
               size: 64,
-              color: AppColors.textSecondary.withValues(alpha: 0.3),
+              color: AppColors.textSecondary.withOpacity( 0.3),
             ),
             const SizedBox(height: 16),
             Text(
@@ -319,7 +319,7 @@ class _HistoryScreenState extends ConsumerState<HistoryScreen> {
         color: AppColors.surface,
         borderRadius: BorderRadius.circular(12),
         border: Border.all(
-          color: cardColor.withValues(alpha: 0.2),
+          color: cardColor.withOpacity( 0.2),
           width: 1,
         ),
       ),
@@ -390,8 +390,8 @@ class _HistoryScreenState extends ConsumerState<HistoryScreen> {
         borderRadius: BorderRadius.circular(12),
         border: Border.all(
           color: session.isCompleted
-              ? AppColors.success.withValues(alpha: 0.3)
-              : AppColors.primary.withValues(alpha: 0.2),
+              ? AppColors.success.withOpacity( 0.3)
+              : AppColors.primary.withOpacity( 0.2),
           width: 1,
         ),
       ),

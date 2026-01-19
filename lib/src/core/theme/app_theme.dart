@@ -99,7 +99,7 @@ class AppTheme {
       ),
       
       // Card theme
-      cardTheme: CardThemeData(
+      cardTheme: CardTheme(
         color: AppColors.surface,
         elevation: 0,
         shape: RoundedRectangleBorder(
