@@ -33,7 +33,78 @@
 - [ ] 不同呼吸模式（4-7-8、盒式呼吸等）
 - [ ] 提醒功能
 
+### Phase 5: iOS 平台发布准备 📝
+- [ ] Mac 环境搭建（Xcode 15.0+）
+- [ ] Apple Developer 账户注册（$99/年）
+- [ ] Bundle ID 注册
+- [ ] 证书和 Provisioning Profile 配置
+- [ ] App 图标和截图准备
+- [ ] App Store 元数据（描述、关键词等）
+- [ ] App 隐私政策
+- [ ] 物理设备测试
+- [ ] 构建 Archive 并上传
+- [ ] 提交审核
+
 ---
+
+## 📱 iOS 发布准备
+
+### 资源文档
+
+已准备详细的 iOS 发布指南和 FAQ：
+
+- **[Mac 本地构建测试完整指南](AIReference/mac_local_build_test_guide.md)** - AI 自动化部署测试参考文档
+- **[iOS App Store 发布完整指南](AIReference/ios_app_store_guide.md)** - 涵盖从环境搭建到上架的全流程
+- **[iOS 准备工作检查清单](AIReference/ios_preparation_checklist.md)** - 可执行的待办事项清单
+- **[美区 App Store 发布 FAQ](AIReference/us_appstore_faq.md)** - 关于美区发布的常见问题解答
+
+### 关于美区 App Store 发布
+
+**重要说明**：
+- ❌ **不需要**美区 Apple ID
+- ✅ Apple Developer Program 账号是全球统一的
+- ✅ 一个账号可以发布到全球所有地区（包括美区）
+- ✅ 使用中国银行账户即可收款（美元自动转换为人民币）
+
+详细说明请查看：[美区 App Store 发布 FAQ](AIReference/us_appstore_faq.md)
+
+### 必要准备
+
+1. **硬件要求**
+   - Mac 电脑（Apple Silicon 推荐）
+   - iPhone 物理设备（用于测试）
+
+2. **账户要求**
+   - Apple Developer 账户（$99/年）
+   - App Store Connect 配置完成
+
+3. **证书和签名**
+   - iOS Distribution 证书
+   - App Store Provisioning Profile
+   - Bundle ID: `com.yourcompany.resonate`
+
+4. **App 资源**
+   - 1024x1024 App Store 图标
+   - 多尺寸应用图标
+   - iPhone 截图（至少 3 张，1290x2796）
+   - 启动页配置
+
+5. **元数据**
+   - 应用名称和副标题
+   - 完整描述（4000 字符）
+   - 关键词（100 字符）
+   - 推广文本（170 字符）
+
+### 预计时间线
+
+| 阶段 | 时间 |
+|------|------|
+| Mac 环境搭建 | 2-3 天 |
+| 账户注册与配置 | 2-3 天 |
+| iOS 设备测试 | 3-5 天 |
+| 资源准备 | 2-3 天 |
+| 提交审核 | 2-5 天 |
+| **总计** | **2-3 周** |
 
 ## 📐 技术栈
 
@@ -194,11 +265,13 @@ flutter run -d macos
 - [Flutter 官方文档](https://flutter.dev/docs)
 - [Riverpod 文档](https://riverpod.dev/)
 - [Chrome 调试报告](AIReference/chrome_debug_report.md)
+- [iOS App Store 发布指南](AIReference/ios_app_store_guide.md)
 
 ---
 
-## 🤝 贡献指南
+## 📄 许可证
 
+MIT License
 ### 提交前检查
 
 1. 代码符合开发规范
