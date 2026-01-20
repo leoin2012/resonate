@@ -45,3 +45,6 @@ app.*.map.json
 
 # Isar database
 *.isar
+
+# Saved directory (local files, excluded from git)
+Saved/

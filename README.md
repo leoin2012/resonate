@@ -160,6 +160,12 @@ web/
 ├── index.html                         # Web 入口（HTML 渲染器配置）
 ├── manifest.json                      # PWA 配置
 └── icons/                            # 图标资源
+
+Saved/
+└── Logs/                             # 日志文件保存目录（已排除 Git 提交）
+    ├── build_YYYYMMDD_HHMMSS.log     # 构建日志
+    ├── install_YYYYMMDD_HHMMSS.log   # 安装日志
+    └── installation_summary_*.log    # 安装摘要
 ```
 
 ---
