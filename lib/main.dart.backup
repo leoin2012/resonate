@@ -1,0 +1,61 @@
+import 'dart:async';
+import 'package:flutter/material.dart';
+import 'package:flutter/foundation.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'src/core/theme/app_theme.dart';
+import 'src/core/router/app_router.dart';
+import 'src/core/utils/app_logger.dart';
+import 'src/core/utils/error_monitor.dart';
+
+/// Initialize app
+Future<void> main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  
+  // Initialize logger
+  final logger = AppLogger();
+  await logger.initialize();
+  
+  logger.info('========================================');
+  logger.info('🚀 Application Starting');
+  logger.info('========================================');
+  
+  // Initialize error monitor
+  final errorMonitor = ErrorMonitor();
+  await errorMonitor.initialize();
+  
+  // Run app
+  logger.logLifecycle('App started');
+  runApp(
+    const ProviderScope(
+      child: ResonateApp(),
+    ),
+  );
+}
+
+/// Main app widget
+class ResonateApp extends ConsumerWidget {
+  const ResonateApp({super.key});
+
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    final logger = AppLogger();
+    logger.logWidgetBuild('ResonateApp');
+    
+    try {
+      final router = ref.watch(routerProvider);
+      logger.logStateChange('routerProvider', 'initialized');
+      
+      logger.info('✅ Building MaterialApp.router');
+      
+      return MaterialApp.router(
+        title: 'Resonate',
+        debugShowCheckedModeBanner: false,
+        theme: AppTheme.darkTheme,
+        routerConfig: router,
+      );
+    } catch (e, stack) {
+      logger.error('Failed to build ResonateApp', e, stack);
+      rethrow;
+    }
+  }
+}

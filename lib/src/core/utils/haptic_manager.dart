@@ -1,7 +1,7 @@
-import 'package:haptic_feedback/haptic_feedback.dart';
+import 'package:flutter/services.dart';
 
 /// Haptic feedback manager
-/// Provides abstraction for haptic feedback operations
+/// Provides abstraction for haptic feedback operations using Flutter's built-in HapticFeedback
 class HapticManager {
   /// Singleton instance
   static final HapticManager _instance = HapticManager._internal();
@@ -10,13 +10,14 @@ class HapticManager {
 
   /// Check if haptic feedback is supported
   Future<bool> get hasHapticSupport async {
-    return await Haptics.canVibrate();
+    // HapticFeedback is always available on iOS
+    return true;
   }
 
   /// Provide light haptic feedback for each breath tick
   Future<void> breathTick() async {
     try {
-      await Haptics.vibrate(HapticsType.light);
+      await HapticFeedback.lightImpact();
     } catch (e) {
       // Haptic feedback may not be available on all platforms
       // Silently fail to avoid breaking the app
@@ -26,7 +27,7 @@ class HapticManager {
   /// Provide medium haptic feedback for important events
   Future<void> eventTap() async {
     try {
-      await Haptics.vibrate(HapticsType.medium);
+      await HapticFeedback.mediumImpact();
     } catch (e) {
       // Silently fail
     }
@@ -35,7 +36,7 @@ class HapticManager {
   /// Provide heavy haptic feedback for completion
   Future<void> completion() async {
     try {
-      await Haptics.vibrate(HapticsType.heavy);
+      await HapticFeedback.heavyImpact();
     } catch (e) {
       // Silently fail
     }
@@ -44,7 +45,7 @@ class HapticManager {
   /// Provide success haptic feedback
   Future<void> success() async {
     try {
-      await Haptics.vibrate(HapticsType.success);
+      await HapticFeedback.mediumImpact();
     } catch (e) {
       // Silently fail
     }
@@ -53,7 +54,7 @@ class HapticManager {
   /// Provide warning haptic feedback
   Future<void> warning() async {
     try {
-      await Haptics.vibrate(HapticsType.warning);
+      await HapticFeedback.lightImpact();
     } catch (e) {
       // Silently fail
     }
@@ -62,7 +63,7 @@ class HapticManager {
   /// Provide error haptic feedback
   Future<void> error() async {
     try {
-      await Haptics.vibrate(HapticsType.error);
+      await HapticFeedback.heavyImpact();
     } catch (e) {
       // Silently fail
     }

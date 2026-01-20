@@ -1,31 +1,45 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'src/core/theme/app_theme.dart';
-import 'src/core/router/app_router.dart';
 
-Future<void> main() async {
-  WidgetsFlutterBinding.ensureInitialized();
-  
-  runApp(
-    const ProviderScope(
-      child: ResonateApp(),
-    ),
-  );
+void main() {
+  print('=== main.dart: runApp called ===');
+  runApp(const MyApp());
 }
 
-/// Main app widget
-class ResonateApp extends ConsumerWidget {
-  const ResonateApp({super.key});
+class MyApp extends StatelessWidget {
+  const MyApp({super.key});
 
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
-    final router = ref.watch(routerProvider);
-
-    return MaterialApp.router(
-      title: 'Resonate',
-      debugShowCheckedModeBanner: false,
-      theme: AppTheme.darkTheme,
-      routerConfig: router,
+  Widget build(BuildContext context) {
+    print('=== MyApp.build called ===');
+    return MaterialApp(
+      title: 'Resonate Test',
+      home: Scaffold(
+        backgroundColor: Colors.red,
+        body: Center(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: const [
+              Text(
+                'TEST SCREEN',
+                style: TextStyle(
+                  color: Colors.white,
+                  fontSize: 40,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+              SizedBox(height: 20),
+              Text(
+                'If you see this,\nFlutter is working!',
+                textAlign: TextAlign.center,
+                style: TextStyle(
+                  color: Colors.white,
+                  fontSize: 20,
+                ),
+              ),
+            ],
+          ),
+        ),
+      ),
     );
   }
 }
