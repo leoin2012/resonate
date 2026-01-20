@@ -20,8 +20,8 @@ dependencies:
   # UI & Fonts
   google_fonts: ^6.1.0
 
-  # ========== Phase 2: Animation & Haptics (TODO) ==========
-  # flutter_animate: ^4.5.0
+  # ========== Phase 2: Animation & Haptics ==========
+  flutter_animate: ^4.5.0
   # (haptic_feedback uses Flutter's HapticFeedback, no extra dep needed)
 
   # ========== Phase 3: Data Persistence (TODO) ==========
