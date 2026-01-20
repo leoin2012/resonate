@@ -1,6 +1,6 @@
 import 'dart:async';
+import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import '../../../core/utils/haptic_manager.dart';
 
 /// Timer state for breathing session (Phase 2: No persistence)
 class TimerState {
@@ -52,7 +52,6 @@ class TimerState {
 
 /// Timer notifier for managing breathing session (Phase 2: No persistence)
 class BreathingTimerNotifier extends StateNotifier<TimerState> {
-  final HapticManager _hapticManager = HapticManager();
   Timer? _timer;
   int _currentSecond = 0;
 
@@ -68,11 +67,12 @@ class BreathingTimerNotifier extends StateNotifier<TimerState> {
     );
     _currentSecond = state.elapsed;
 
-    _timer = Timer.periodic(const Duration(seconds: 1), (timer) async {
+    _timer = Timer.periodic(const Duration(seconds: 1), (timer) {
       _currentSecond++;
       
-      // Trigger haptic feedback every second
-      await _hapticManager.breathTick();
+      // Trigger haptic feedback every second (using direct call for reliability)
+      // Use mediumImpact for more noticeable feedback
+      HapticFeedback.mediumImpact();
 
       // Update elapsed time
       state = state.copyWith(
@@ -81,13 +81,15 @@ class BreathingTimerNotifier extends StateNotifier<TimerState> {
       );
 
       // Increment cycle count (every 4 seconds = one breath cycle)
+      // Heavy impact at cycle completion
       if (_currentSecond % 4 == 0) {
         state = state.copyWith(cycleCount: state.cycleCount + 1);
+        HapticFeedback.heavyImpact();
       }
 
       // Stop if duration reached
       if (_currentSecond >= state.duration) {
-        await complete();
+        complete();
       }
     });
   }
@@ -121,9 +123,16 @@ class BreathingTimerNotifier extends StateNotifier<TimerState> {
   }
 
   /// Complete the session
-  Future<void> complete() async {
+  void complete() {
     pause();
-    await _hapticManager.completion();
+    // Triple haptic for completion notification
+    HapticFeedback.heavyImpact();
+    Future.delayed(const Duration(milliseconds: 200), () {
+      HapticFeedback.heavyImpact();
+    });
+    Future.delayed(const Duration(milliseconds: 400), () {
+      HapticFeedback.heavyImpact();
+    });
     // Phase 2: No session saving, just haptic feedback
   }
 

@@ -14,13 +14,23 @@ class HapticManager {
     return true;
   }
 
-  /// Provide light haptic feedback for each breath tick
+  /// Provide haptic feedback for each breath tick
+  /// Uses mediumImpact for more noticeable feedback on iPhone
   Future<void> breathTick() async {
     try {
-      await HapticFeedback.lightImpact();
+      HapticFeedback.mediumImpact();
     } catch (e) {
       // Haptic feedback may not be available on all platforms
       // Silently fail to avoid breaking the app
+    }
+  }
+
+  /// Provide heavy haptic feedback for cycle completion (every 4 seconds)
+  Future<void> cycleComplete() async {
+    try {
+      HapticFeedback.heavyImpact();
+    } catch (e) {
+      // Silently fail
     }
   }
 
@@ -33,10 +43,14 @@ class HapticManager {
     }
   }
 
-  /// Provide heavy haptic feedback for completion
+  /// Provide heavy haptic feedback for completion (triple tap)
   Future<void> completion() async {
     try {
-      await HapticFeedback.heavyImpact();
+      HapticFeedback.heavyImpact();
+      await Future.delayed(const Duration(milliseconds: 200));
+      HapticFeedback.heavyImpact();
+      await Future.delayed(const Duration(milliseconds: 200));
+      HapticFeedback.heavyImpact();
     } catch (e) {
       // Silently fail
     }

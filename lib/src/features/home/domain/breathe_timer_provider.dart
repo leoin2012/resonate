@@ -80,11 +80,11 @@ class BreathingTimerNotifier extends StateNotifier<TimerState> {
     );
     _currentSecond = state.elapsed;
 
-    _timer = Timer.periodic(const Duration(seconds: 1), (timer) async {
+    _timer = Timer.periodic(const Duration(seconds: 1), (timer) {
       _currentSecond++;
       
-      // Trigger haptic feedback every second
-      await _hapticManager.breathTick();
+      // Trigger haptic feedback every second (sync call for reliability)
+      _hapticManager.breathTick();
 
       // Update elapsed time
       state = state.copyWith(
@@ -93,13 +93,15 @@ class BreathingTimerNotifier extends StateNotifier<TimerState> {
       );
 
       // Increment cycle count (every 4 seconds = one breath cycle)
+      // Heavy haptic at cycle completion
       if (_currentSecond % 4 == 0) {
         state = state.copyWith(cycleCount: state.cycleCount + 1);
+        _hapticManager.cycleComplete();
       }
 
       // Stop if duration reached
       if (_currentSecond >= state.duration) {
-        await complete();
+        complete();
       }
     });
   }

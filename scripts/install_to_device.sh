@@ -7,7 +7,7 @@
 set -e  # 遇到错误立即退出
 
 # ========== 配置参数 ==========
-BUILD_MODE="${1:-debug}"  # 默认使用 debug 模式，可传参 release
+BUILD_MODE="${1:-release}"  # 默认使用 release 模式 (iOS 14+ 需要 release 才能从主屏幕启动)
 BUILD_TIMEOUT=600  # 构建超时时间(秒),默认10分钟
 DEPLOY_TIMEOUT=120  # 部署超时时间(秒),默认2分钟
 
@@ -28,9 +28,15 @@ mkdir -p "$LOG_DIR"
 if [ "$BUILD_MODE" == "release" ]; then
     BUILD_CONFIGURATION="Release"
     PRODUCTS_DIR="Release-iphoneos"
+    FLUTTER_BUILD_MODE="--release"
+elif [ "$BUILD_MODE" == "profile" ]; then
+    BUILD_CONFIGURATION="Profile"
+    PRODUCTS_DIR="Profile-iphoneos"
+    FLUTTER_BUILD_MODE="--profile"
 else
     BUILD_CONFIGURATION="Debug"
     PRODUCTS_DIR="Debug-iphoneos"
+    FLUTTER_BUILD_MODE="--debug"
 fi
 
 # 构建产物路径
@@ -184,7 +190,7 @@ echo ""
 
 # ========== 步骤 5: 构建 iOS 应用 ==========
 echo "========================================"
-echo "步骤 5/8: 构建 iOS 应用"
+echo "步骤 5/8: Xcode 构建 iOS 应用 ($BUILD_CONFIGURATION)"
 echo "========================================"
 
 cd ios
@@ -314,19 +320,21 @@ echo ""
 echo "开始部署 (这可能需要几十秒)..."
 echo ""
 
+# NOTE: 不使用 --debug 参数，否则 app 需要调试器才能运行
+# 使用 --justlaunch 让 app 安装后直接启动（无需调试器）
 if [ -n "$TIMEOUT_CMD" ]; then
     $TIMEOUT_CMD $DEPLOY_TIMEOUT ios-deploy \
       --id "$DEVICE_ID" \
       --bundle "$APP_PATH" \
       --noninteractive \
-      --debug 2>&1 | tee "$INSTALL_LOG"
+      --justlaunch 2>&1 | tee "$INSTALL_LOG"
     DEPLOY_EXIT_CODE=${PIPESTATUS[0]}
 else
     ios-deploy \
       --id "$DEVICE_ID" \
       --bundle "$APP_PATH" \
       --noninteractive \
-      --debug 2>&1 | tee "$INSTALL_LOG"
+      --justlaunch 2>&1 | tee "$INSTALL_LOG"
     DEPLOY_EXIT_CODE=${PIPESTATUS[0]}
 fi
 

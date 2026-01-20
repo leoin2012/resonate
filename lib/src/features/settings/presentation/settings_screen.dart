@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:google_fonts/google_fonts.dart';
 import '../../../core/theme/app_theme.dart';
 import '../../../core/utils/haptic_manager.dart';
 import '../domain/settings_provider.dart';
@@ -24,16 +23,18 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen> {
     return Scaffold(
       backgroundColor: AppColors.background,
       appBar: AppBar(
-        title: Text(
+        title: const Text(
           'Settings',
-          style: GoogleFonts.orbitron(
+          style: TextStyle(
             fontSize: 20,
             fontWeight: FontWeight.w600,
             color: AppColors.textPrimary,
+            letterSpacing: 2.0,
           ),
         ),
         backgroundColor: Colors.transparent,
         elevation: 0,
+        iconTheme: const IconThemeData(color: AppColors.textPrimary),
       ),
       body: ListView(
         padding: const EdgeInsets.all(16),
@@ -44,16 +45,16 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen> {
             icon: Icons.vibration,
             children: [
               SwitchListTile(
-                title: Text(
+                title: const Text(
                   'Enable Haptic',
-                  style: GoogleFonts.roboto(
+                  style: TextStyle(
                     fontSize: 16,
                     color: AppColors.textPrimary,
                   ),
                 ),
-                subtitle: Text(
+                subtitle: const Text(
                   'Vibration feedback for breathing',
-                  style: GoogleFonts.roboto(
+                  style: TextStyle(
                     fontSize: 14,
                     color: AppColors.textSecondary,
                   ),
@@ -63,7 +64,7 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen> {
                   await _hapticManager.eventTap();
                   settingsNotifier.toggleHaptic();
                 },
-                activeTrackColor: AppColors.primary.withOpacity( 0.5),
+                activeTrackColor: AppColors.primary.withOpacity(0.5),
                 thumbColor: WidgetStateProperty.all(AppColors.primary),
               ),
               if (settings.hapticEnabled) ...[
@@ -76,16 +77,16 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen> {
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
-                          Text(
+                          const Text(
                             'Intensity',
-                            style: GoogleFonts.roboto(
+                            style: TextStyle(
                               fontSize: 14,
                               color: AppColors.textSecondary,
                             ),
                           ),
                           Text(
                             '${(settings.hapticIntensity * 100).toInt()}%',
-                            style: GoogleFonts.roboto(
+                            style: const TextStyle(
                               fontSize: 14,
                               color: AppColors.primary,
                               fontWeight: FontWeight.w600,
@@ -123,9 +124,9 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen> {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text(
+                    const Text(
                       'Default Duration',
-                      style: GoogleFonts.roboto(
+                      style: TextStyle(
                         fontSize: 14,
                         color: AppColors.textSecondary,
                       ),
@@ -193,16 +194,16 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen> {
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        Text(
+                        const Text(
                           'Breathing Speed',
-                          style: GoogleFonts.roboto(
+                          style: TextStyle(
                             fontSize: 14,
                             color: AppColors.textSecondary,
                           ),
                         ),
                         Text(
                           '${settings.animationSpeed}x',
-                          style: GoogleFonts.roboto(
+                          style: const TextStyle(
                             fontSize: 14,
                             color: AppColors.primary,
                             fontWeight: FontWeight.w600,
@@ -235,23 +236,23 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen> {
             icon: Icons.volume_up,
             children: [
               SwitchListTile(
-                title: Text(
+                title: const Text(
                   'Enable Sound',
-                  style: GoogleFonts.roboto(
+                  style: TextStyle(
                     fontSize: 16,
                     color: AppColors.textPrimary,
                   ),
                 ),
-                subtitle: Text(
+                subtitle: const Text(
                   'Audio feedback (Coming soon)',
-                  style: GoogleFonts.roboto(
+                  style: TextStyle(
                     fontSize: 14,
                     color: AppColors.textSecondary,
                   ),
                 ),
                 value: settings.soundEnabled,
                 onChanged: null, // Disabled for now
-                activeTrackColor: AppColors.primary.withOpacity( 0.5),
+                activeTrackColor: AppColors.primary.withOpacity(0.5),
                 thumbColor: WidgetStateProperty.all(AppColors.primary),
               ),
             ],
@@ -265,16 +266,16 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen> {
             icon: Icons.refresh,
             children: [
               ListTile(
-                title: Text(
+                title: const Text(
                   'Reset to Defaults',
-                  style: GoogleFonts.roboto(
+                  style: TextStyle(
                     fontSize: 16,
                     color: AppColors.error,
                   ),
                 ),
-                subtitle: Text(
+                subtitle: const Text(
                   'Restore all settings to default values',
-                  style: GoogleFonts.roboto(
+                  style: TextStyle(
                     fontSize: 14,
                     color: AppColors.textSecondary,
                   ),
@@ -284,28 +285,26 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen> {
                   color: AppColors.error,
                 ),
                 onTap: () async {
-                  // Capture context before async gap
                   final context = this.context;
                   
                   await _hapticManager.warning();
                   if (!mounted) return;
                   
-                  // Use captured context for showDialog
                   final confirm = await showDialog<bool>(
                     context: context,
                     builder: (dialogContext) => AlertDialog(
                       backgroundColor: AppColors.surface,
-                      title: Text(
+                      title: const Text(
                         'Reset Settings?',
-                        style: GoogleFonts.roboto(
+                        style: TextStyle(
                           fontSize: 20,
                           fontWeight: FontWeight.w600,
                           color: AppColors.textPrimary,
                         ),
                       ),
-                      content: Text(
+                      content: const Text(
                         'This will restore all settings to their default values.',
-                        style: GoogleFonts.roboto(
+                        style: TextStyle(
                           fontSize: 16,
                           color: AppColors.textSecondary,
                         ),
@@ -313,9 +312,9 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen> {
                       actions: [
                         TextButton(
                           onPressed: () => Navigator.pop(dialogContext, false),
-                          child: Text(
+                          child: const Text(
                             'Cancel',
-                            style: GoogleFonts.roboto(
+                            style: TextStyle(
                               fontSize: 16,
                               color: AppColors.textSecondary,
                             ),
@@ -327,9 +326,9 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen> {
                             backgroundColor: AppColors.error,
                             foregroundColor: Colors.white,
                           ),
-                          child: Text(
+                          child: const Text(
                             'Reset',
-                            style: GoogleFonts.roboto(
+                            style: TextStyle(
                               fontSize: 16,
                               fontWeight: FontWeight.w600,
                             ),
@@ -344,11 +343,8 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen> {
                     settingsNotifier.resetToDefaults();
                     if (mounted) {
                       ScaffoldMessenger.of(context).showSnackBar(
-                        SnackBar(
-                          content: Text(
-                            'Settings reset to defaults',
-                            style: GoogleFonts.roboto(),
-                          ),
+                        const SnackBar(
+                          content: Text('Settings reset to defaults'),
                           backgroundColor: AppColors.success,
                         ),
                       );
@@ -375,7 +371,7 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen> {
         color: AppColors.surface,
         borderRadius: BorderRadius.circular(16),
         border: Border.all(
-          color: AppColors.primary.withOpacity( 0.2),
+          color: AppColors.primary.withOpacity(0.2),
           width: 1,
         ),
       ),
@@ -394,10 +390,11 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen> {
                 const SizedBox(width: 12),
                 Text(
                   title,
-                  style: GoogleFonts.orbitron(
+                  style: const TextStyle(
                     fontSize: 16,
                     fontWeight: FontWeight.w600,
                     color: AppColors.primary,
+                    letterSpacing: 1.0,
                   ),
                 ),
               ],
@@ -419,15 +416,15 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen> {
       label: Text(label),
       onPressed: onTap,
       backgroundColor: selected 
-          ? AppColors.primary.withOpacity( 0.2)
+          ? AppColors.primary.withOpacity(0.2)
           : AppColors.surface,
-      labelStyle: GoogleFonts.roboto(
+      labelStyle: TextStyle(
         fontSize: 14,
         color: selected ? AppColors.primary : AppColors.textSecondary,
         fontWeight: selected ? FontWeight.w600 : FontWeight.normal,
       ),
       side: BorderSide(
-        color: selected ? AppColors.primary : AppColors.textSecondary.withOpacity( 0.3),
+        color: selected ? AppColors.primary : AppColors.textSecondary.withOpacity(0.3),
         width: 1,
       ),
       shape: RoundedRectangleBorder(

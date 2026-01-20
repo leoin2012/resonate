@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
 
 /// App color constants
 class AppColors {
@@ -34,39 +33,43 @@ class AppTheme {
       // Scaffold background
       scaffoldBackgroundColor: AppColors.background,
       
-      // Text theme with Orbitron font
-      textTheme: TextTheme(
-        displayLarge: GoogleFonts.orbitron(
+      // Text theme using system fonts (no google_fonts to avoid crash issues)
+      textTheme: const TextTheme(
+        displayLarge: TextStyle(
           fontSize: 57,
           fontWeight: FontWeight.bold,
           color: AppColors.textPrimary,
+          letterSpacing: 2.0,
         ),
-        displayMedium: GoogleFonts.orbitron(
+        displayMedium: TextStyle(
           fontSize: 45,
           fontWeight: FontWeight.bold,
           color: AppColors.textPrimary,
+          letterSpacing: 2.0,
         ),
-        displaySmall: GoogleFonts.orbitron(
+        displaySmall: TextStyle(
           fontSize: 36,
           fontWeight: FontWeight.bold,
           color: AppColors.textPrimary,
+          letterSpacing: 1.5,
         ),
-        headlineMedium: GoogleFonts.orbitron(
+        headlineMedium: TextStyle(
           fontSize: 28,
           fontWeight: FontWeight.w600,
           color: AppColors.textPrimary,
+          letterSpacing: 1.0,
         ),
-        titleLarge: GoogleFonts.orbitron(
+        titleLarge: TextStyle(
           fontSize: 22,
           fontWeight: FontWeight.w600,
           color: AppColors.textPrimary,
         ),
-        bodyLarge: GoogleFonts.roboto(
+        bodyLarge: TextStyle(
           fontSize: 16,
           fontWeight: FontWeight.normal,
           color: AppColors.textPrimary,
         ),
-        bodyMedium: GoogleFonts.roboto(
+        bodyMedium: TextStyle(
           fontSize: 14,
           fontWeight: FontWeight.normal,
           color: AppColors.textSecondary,

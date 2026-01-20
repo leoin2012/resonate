@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:google_fonts/google_fonts.dart';
-import 'package:intl/intl.dart';
 import '../../../core/theme/app_theme.dart';
 import '../../../core/utils/haptic_manager.dart';
 import '../../../data/models/breathing_session.dart';
@@ -35,16 +33,18 @@ class _HistoryScreenState extends ConsumerState<HistoryScreen> {
     return Scaffold(
       backgroundColor: AppColors.background,
       appBar: AppBar(
-        title: Text(
+        title: const Text(
           'History',
-          style: GoogleFonts.orbitron(
+          style: TextStyle(
             fontSize: 20,
             fontWeight: FontWeight.w600,
             color: AppColors.textPrimary,
+            letterSpacing: 2.0,
           ),
         ),
         backgroundColor: Colors.transparent,
         elevation: 0,
+        iconTheme: const IconThemeData(color: AppColors.textPrimary),
         actions: [
           // Period selector
           _buildPeriodSelector(),
@@ -76,7 +76,7 @@ class _HistoryScreenState extends ConsumerState<HistoryScreen> {
   Widget _buildPeriodSelector() {
     return PopupMenuButton<int>(
       initialValue: _selectedPeriod,
-      icon: Icon(
+      icon: const Icon(
         Icons.date_range_rounded,
         color: AppColors.textSecondary,
       ),
@@ -106,9 +106,7 @@ class _HistoryScreenState extends ConsumerState<HistoryScreen> {
       value: value,
       child: Text(
         label,
-        style: GoogleFonts.roboto(
-          color: AppColors.textPrimary,
-        ),
+        style: const TextStyle(color: AppColors.textPrimary),
       ),
     );
   }
@@ -126,9 +124,9 @@ class _HistoryScreenState extends ConsumerState<HistoryScreen> {
               color: AppColors.error,
             ),
             const SizedBox(height: 16),
-            Text(
+            const Text(
               'Error loading history',
-              style: GoogleFonts.roboto(
+              style: TextStyle(
                 fontSize: 18,
                 fontWeight: FontWeight.w600,
                 color: AppColors.textPrimary,
@@ -137,7 +135,7 @@ class _HistoryScreenState extends ConsumerState<HistoryScreen> {
             const SizedBox(height: 8),
             Text(
               error,
-              style: GoogleFonts.roboto(
+              style: const TextStyle(
                 fontSize: 14,
                 color: AppColors.textSecondary,
               ),
@@ -155,11 +153,9 @@ class _HistoryScreenState extends ConsumerState<HistoryScreen> {
                   borderRadius: BorderRadius.circular(8),
                 ),
               ),
-              child: Text(
+              child: const Text(
                 'Retry',
-                style: GoogleFonts.roboto(
-                  fontWeight: FontWeight.w600,
-                ),
+                style: TextStyle(fontWeight: FontWeight.w600),
               ),
             ),
           ],
@@ -178,21 +174,21 @@ class _HistoryScreenState extends ConsumerState<HistoryScreen> {
             Icon(
               Icons.history_rounded,
               size: 64,
-              color: AppColors.textSecondary.withOpacity( 0.3),
+              color: AppColors.textSecondary.withOpacity(0.3),
             ),
             const SizedBox(height: 16),
-            Text(
+            const Text(
               'No sessions yet',
-              style: GoogleFonts.roboto(
+              style: TextStyle(
                 fontSize: 18,
                 fontWeight: FontWeight.w600,
                 color: AppColors.textPrimary,
               ),
             ),
             const SizedBox(height: 8),
-            Text(
+            const Text(
               'Start a breathing session to track your progress',
-              style: GoogleFonts.roboto(
+              style: TextStyle(
                 fontSize: 14,
                 color: AppColors.textSecondary,
               ),
@@ -232,12 +228,13 @@ class _HistoryScreenState extends ConsumerState<HistoryScreen> {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Text(
+        const Text(
           'Statistics',
-          style: GoogleFonts.orbitron(
+          style: TextStyle(
             fontSize: 16,
             fontWeight: FontWeight.w600,
             color: AppColors.primary,
+            letterSpacing: 1.0,
           ),
         ),
         const SizedBox(height: 16),
@@ -319,7 +316,7 @@ class _HistoryScreenState extends ConsumerState<HistoryScreen> {
         color: AppColors.surface,
         borderRadius: BorderRadius.circular(12),
         border: Border.all(
-          color: cardColor.withOpacity( 0.2),
+          color: cardColor.withOpacity(0.2),
           width: 1,
         ),
       ),
@@ -334,16 +331,17 @@ class _HistoryScreenState extends ConsumerState<HistoryScreen> {
           const SizedBox(height: 8),
           Text(
             value,
-            style: GoogleFonts.orbitron(
+            style: TextStyle(
               fontSize: 24,
               fontWeight: FontWeight.bold,
               color: cardColor,
+              letterSpacing: 1.0,
             ),
           ),
           const SizedBox(height: 4),
           Text(
             label,
-            style: GoogleFonts.roboto(
+            style: const TextStyle(
               fontSize: 12,
               color: AppColors.textSecondary,
             ),
@@ -357,12 +355,13 @@ class _HistoryScreenState extends ConsumerState<HistoryScreen> {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Text(
+        const Text(
           'Sessions',
-          style: GoogleFonts.orbitron(
+          style: TextStyle(
             fontSize: 16,
             fontWeight: FontWeight.w600,
             color: AppColors.primary,
+            letterSpacing: 1.0,
           ),
         ),
         const SizedBox(height: 12),
@@ -380,8 +379,8 @@ class _HistoryScreenState extends ConsumerState<HistoryScreen> {
   }
 
   Widget _buildSessionCard(BreathingSession session) {
-    final dateFormat = DateFormat('MMM dd, yyyy');
-    final timeFormat = DateFormat('hh:mm a');
+    final dateStr = _formatDate(session.startTime);
+    final timeStr = _formatTime(session.startTime);
 
     return Container(
       padding: const EdgeInsets.all(16),
@@ -390,8 +389,8 @@ class _HistoryScreenState extends ConsumerState<HistoryScreen> {
         borderRadius: BorderRadius.circular(12),
         border: Border.all(
           color: session.isCompleted
-              ? AppColors.success.withOpacity( 0.3)
-              : AppColors.primary.withOpacity( 0.2),
+              ? AppColors.success.withOpacity(0.3)
+              : AppColors.primary.withOpacity(0.2),
           width: 1,
         ),
       ),
@@ -414,8 +413,8 @@ class _HistoryScreenState extends ConsumerState<HistoryScreen> {
                   ),
                   const SizedBox(width: 8),
                   Text(
-                    dateFormat.format(session.startTime),
-                    style: GoogleFonts.roboto(
+                    dateStr,
+                    style: const TextStyle(
                       fontSize: 14,
                       fontWeight: FontWeight.w600,
                       color: AppColors.textPrimary,
@@ -436,8 +435,8 @@ class _HistoryScreenState extends ConsumerState<HistoryScreen> {
           Row(
             children: [
               Text(
-                timeFormat.format(session.startTime),
-                style: GoogleFonts.roboto(
+                timeStr,
+                style: const TextStyle(
                   fontSize: 12,
                   color: AppColors.textSecondary,
                 ),
@@ -446,7 +445,7 @@ class _HistoryScreenState extends ConsumerState<HistoryScreen> {
               Container(
                 width: 4,
                 height: 4,
-                decoration: BoxDecoration(
+                decoration: const BoxDecoration(
                   color: AppColors.textSecondary,
                   shape: BoxShape.circle,
                 ),
@@ -454,7 +453,7 @@ class _HistoryScreenState extends ConsumerState<HistoryScreen> {
               const SizedBox(width: 8),
               Text(
                 session.formattedDuration,
-                style: GoogleFonts.roboto(
+                style: const TextStyle(
                   fontSize: 12,
                   color: AppColors.textSecondary,
                 ),
@@ -463,7 +462,7 @@ class _HistoryScreenState extends ConsumerState<HistoryScreen> {
               Container(
                 width: 4,
                 height: 4,
-                decoration: BoxDecoration(
+                decoration: const BoxDecoration(
                   color: AppColors.textSecondary,
                   shape: BoxShape.circle,
                 ),
@@ -471,7 +470,7 @@ class _HistoryScreenState extends ConsumerState<HistoryScreen> {
               const SizedBox(width: 8),
               Text(
                 '${session.cycleCount} cycles',
-                style: GoogleFonts.roboto(
+                style: const TextStyle(
                   fontSize: 12,
                   color: AppColors.textSecondary,
                 ),
@@ -497,16 +496,16 @@ class _HistoryScreenState extends ConsumerState<HistoryScreen> {
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              Text(
+              const Text(
                 'Completion',
-                style: GoogleFonts.roboto(
+                style: TextStyle(
                   fontSize: 10,
                   color: AppColors.textSecondary,
                 ),
               ),
               Text(
                 '${(session.completionPercentage * 100).toInt()}%',
-                style: GoogleFonts.roboto(
+                style: TextStyle(
                   fontSize: 10,
                   color: session.isCompleted
                       ? AppColors.success
@@ -521,6 +520,20 @@ class _HistoryScreenState extends ConsumerState<HistoryScreen> {
     );
   }
 
+  /// Format date without intl package
+  String _formatDate(DateTime date) {
+    const months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 
+                    'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+    return '${months[date.month - 1]} ${date.day.toString().padLeft(2, '0')}, ${date.year}';
+  }
+
+  /// Format time without intl package
+  String _formatTime(DateTime date) {
+    final hour = date.hour > 12 ? date.hour - 12 : (date.hour == 0 ? 12 : date.hour);
+    final period = date.hour >= 12 ? 'PM' : 'AM';
+    return '${hour.toString().padLeft(2, '0')}:${date.minute.toString().padLeft(2, '0')} $period';
+  }
+
   void _showDeleteDialog(BreathingSession session) async {
     await _hapticManager.warning();
     if (!mounted) return;
@@ -529,17 +542,17 @@ class _HistoryScreenState extends ConsumerState<HistoryScreen> {
       context: context,
       builder: (dialogContext) => AlertDialog(
         backgroundColor: AppColors.surface,
-        title: Text(
+        title: const Text(
           'Delete Session?',
-          style: GoogleFonts.roboto(
+          style: TextStyle(
             fontSize: 20,
             fontWeight: FontWeight.w600,
             color: AppColors.textPrimary,
           ),
         ),
-        content: Text(
+        content: const Text(
           'This action cannot be undone.',
-          style: GoogleFonts.roboto(
+          style: TextStyle(
             fontSize: 16,
             color: AppColors.textSecondary,
           ),
@@ -547,9 +560,9 @@ class _HistoryScreenState extends ConsumerState<HistoryScreen> {
         actions: [
           TextButton(
             onPressed: () => Navigator.pop(dialogContext, false),
-            child: Text(
+            child: const Text(
               'Cancel',
-              style: GoogleFonts.roboto(
+              style: TextStyle(
                 fontSize: 16,
                 color: AppColors.textSecondary,
               ),
@@ -561,9 +574,9 @@ class _HistoryScreenState extends ConsumerState<HistoryScreen> {
               backgroundColor: AppColors.error,
               foregroundColor: Colors.white,
             ),
-            child: Text(
+            child: const Text(
               'Delete',
-              style: GoogleFonts.roboto(
+              style: TextStyle(
                 fontSize: 16,
                 fontWeight: FontWeight.w600,
               ),
@@ -587,17 +600,17 @@ class _HistoryScreenState extends ConsumerState<HistoryScreen> {
       context: context,
       builder: (dialogContext) => AlertDialog(
         backgroundColor: AppColors.surface,
-        title: Text(
+        title: const Text(
           'Clear All History?',
-          style: GoogleFonts.roboto(
+          style: TextStyle(
             fontSize: 20,
             fontWeight: FontWeight.w600,
             color: AppColors.textPrimary,
           ),
         ),
-        content: Text(
+        content: const Text(
           'This will delete all session records. This action cannot be undone.',
-          style: GoogleFonts.roboto(
+          style: TextStyle(
             fontSize: 16,
             color: AppColors.textSecondary,
           ),
@@ -605,9 +618,9 @@ class _HistoryScreenState extends ConsumerState<HistoryScreen> {
         actions: [
           TextButton(
             onPressed: () => Navigator.pop(dialogContext, false),
-            child: Text(
+            child: const Text(
               'Cancel',
-              style: GoogleFonts.roboto(
+              style: TextStyle(
                 fontSize: 16,
                 color: AppColors.textSecondary,
               ),
@@ -619,9 +632,9 @@ class _HistoryScreenState extends ConsumerState<HistoryScreen> {
               backgroundColor: AppColors.error,
               foregroundColor: Colors.white,
             ),
-            child: Text(
+            child: const Text(
               'Clear All',
-              style: GoogleFonts.roboto(
+              style: TextStyle(
                 fontSize: 16,
                 fontWeight: FontWeight.w600,
               ),
